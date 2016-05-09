@@ -1,0 +1,25 @@
+PROCEDURE "_SYS_BIC"."ZABC::RevokePrivileges" 
+( OUT out_var INT)
+	LANGUAGE SQLSCRIPT
+	SQL SECURITY INVOKER
+	AS
+		 v_statement VARCHAR(256);
+BEGIN
+    
+    DECLARE count INT := 0 ;
+    DECLARE CURSOR C FOR select GRANTEE from GRANTED_ROLES where role_name = 'YOUR_ROLE_NAME';
+    
+    FOR R AS C DO
+    --Some restriction: exclude user _SYS_REPO :)
+    	if R.GRANTEE != '_SYS_REPO' then 
+    count := :count + 1;
+		v_statement :=
+      'CALL REVOKE_ACTIVATED_ROLE (''' || 
+      'YOUR_ROLE_NAME' || ''', ''' || R.GRANTEE || ''')';  
+    	-- and run the statement:
+    	EXEC v_statement; 
+    	end if;
+    END FOR;
+    out_var := :count;
+
+END;
