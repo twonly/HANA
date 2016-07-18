@@ -1,0 +1,54 @@
+### FileName: test_config.json 
+
+{
+"report_id":"Your_Report_ID",
+"use_hdb":false,
+"blades":["hostname_1"],
+"tests": [{
+			"package": "LandscapeTest",
+			"test_timeout": 0,
+			"id": 1,
+			"config": { },
+			"class": "EvalOs"
+        },
+        {
+			"package": "NetworkTest",
+			"test_timeout": 0,
+			"id": 2,
+			"config":{"InternHosts":{"hostname_1":"hostname_1"}
+			},
+			"class": "NetworkSingleStream"
+        },
+        {
+			"package": "NetworkTest",
+			"test_timeout": 0,
+			"id": 3,
+			"config":{"InternHosts": {"hostname_1":"hostname_1"}
+			},
+			"class": "NetworkBidirectStream"
+        },
+        {
+			"package": "FilesystemTest",
+			"test_timeout": 0,
+			"id": 4,
+			"config":{"mount":{"hostname_1":["/hana/data/SID"]
+			},
+			"parameter":{"async_read_submit":"off"},
+			"duration":"short" },
+			"class": "DataVolumeIO"
+        },
+        {
+			"package": "FilesystemTest",
+			"test_timeout": 0,
+			"id": 5,
+			"config":{"mount":{"hostname_1":["/hana/log/SID"]
+			},
+			"parameter":{"async_read_submit":"off"},
+			"duration":"short"
+			},
+			"class": "LogVolumeIO"
+        }
+        ]
+}
+
+
